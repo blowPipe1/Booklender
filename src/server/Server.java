@@ -1,5 +1,6 @@
 package server;
 
+import Handlers.BookInfoHandler;
 import Handlers.BookListHandler;
 import com.sun.net.httpserver.HttpServer;
 import models.LibraryData;
@@ -23,7 +24,7 @@ public class Server {
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
 
         server.createContext("/books", new BookListHandler(libraryData, renderer));
-//        server.createContext("/book-info", new BookInfoHandler(libraryData, renderer));
+        server.createContext("/book-info", new BookInfoHandler(libraryData, renderer));
 //        server.createContext("/employee-info", new EmployeeInfoHandler(libraryData, renderer));
 
         server.setExecutor(null);
