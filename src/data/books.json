@@ -1,0 +1,26 @@
+{
+  "books": [
+    {
+      "isbn": "978-5-94962-026-3",
+      "title": "Effective Java",
+      "issued": true,
+      "issuedToEmployeeId": "emp101"
+    },
+    {
+      "isbn": "978-1449365775",
+      "title": "Head First Design Patterns",
+      "issued": false,
+      "issuedToEmployeeId": null
+    }
+  ],
+  "employees": [
+    {
+      "id": "1",
+      "name": "Иван Иванов"
+    },
+    {
+      "id": "2",
+      "name": "Петр Петров"
+    }
+  ]
+}
