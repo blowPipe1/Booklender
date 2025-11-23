@@ -12,7 +12,7 @@ public class DataLoader {
 
     public static LibraryData loadData() throws IOException {
         if (data == null) {
-            InputStream is = DataLoader.class.getResourceAsStream("/books.json");
+            InputStream is = DataLoader.class.getResourceAsStream("/data/books.json");
             if (is == null) {
                 throw new FileNotFoundException("books.json not found");
             }
