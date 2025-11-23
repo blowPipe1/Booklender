@@ -2,6 +2,7 @@ package server;
 
 import Handlers.BookInfoHandler;
 import Handlers.BookListHandler;
+import Handlers.EmployeeInfoHandler;
 import com.sun.net.httpserver.HttpServer;
 import models.LibraryData;
 import utils.DataLoader;
@@ -25,7 +26,7 @@ public class Server {
 
         server.createContext("/books", new BookListHandler(libraryData, renderer));
         server.createContext("/book-info", new BookInfoHandler(libraryData, renderer));
-//        server.createContext("/employee-info", new EmployeeInfoHandler(libraryData, renderer));
+        server.createContext("/employee-info", new EmployeeInfoHandler(libraryData, renderer));
 
         server.setExecutor(null);
         server.start();
