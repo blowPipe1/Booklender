@@ -34,6 +34,7 @@ public class Server {
         server.createContext("/employee-info", new EmployeeInfoHandler(libraryData, renderer));  // http://localhost:9889/employee-info?email=petr.petrov@mail.com для проверки
 
         server.createContext("/register", new RegistrationHandler(renderer, users));
+        server.createContext("/login", new LoginHandler(renderer, users));
 
         server.setExecutor(null);
         server.start();
