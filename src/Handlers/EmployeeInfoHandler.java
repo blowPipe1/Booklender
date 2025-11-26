@@ -30,19 +30,21 @@ public class EmployeeInfoHandler implements HttpHandler {
         }
 
         String query = exchange.getRequestURI().getQuery();
-        String id = null;
+        String email = null;
+
         if (query != null) {
             for (String param : query.split("&")) {
-                if (param.startsWith("id=")) {
-                    id = param.substring(3);
+                if (param.startsWith("email=")) {
+                    email = param.substring(6);
                     break;
                 }
             }
         }
 
-        String finalId = id;
+
+        String finalEmail = email;
         Employee employee = libraryData.getEmployees().stream()
-                .filter(e -> e.getId().equals(finalId))
+                .filter(e -> e.getEmail().equals(finalEmail))
                 .findFirst()
                 .orElse(null);
 
@@ -50,16 +52,16 @@ public class EmployeeInfoHandler implements HttpHandler {
             Map<String, Object> dataModel = new HashMap<>();
             dataModel.put("employee", employee);
 
-            String finalId1 = id;
+            String finalEmail1 = email;
             List<Book> issuedBooks = libraryData.getBooks().stream()
-                    .filter(b -> b.getIssuedToEmployeeId() != null && b.getIssuedToEmployeeId().equals(finalId1))
+                    .filter(b -> b.getIssuedToEmployeeId() != null && b.getIssuedToEmployeeId().equals(finalEmail1))
                     .collect(Collectors.toList());
 
             dataModel.put("issuedBooks", issuedBooks);
 
             String response = "";
             try {
-                response = renderer.render("employee-info.ftl", dataModel);
+                response = renderer.render("employee-info.ftlh", dataModel);
                 sendResponse(exchange, 200, response, "text/html; charset=UTF-8");
             } catch (TemplateException e) {
                 sendResponse(exchange, 500, "Template error: " + e.getMessage());

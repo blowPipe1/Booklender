@@ -31,7 +31,7 @@ public class BookListHandler implements HttpHandler {
         dataModel.put("books", libraryData.getBooks());
         String response = "";
         try {
-            response = renderer.render("book-list.ftl", dataModel);
+            response = renderer.render("book-list.ftlh", dataModel);
             sendResponse(exchange, 200, response, "text/html; charset=UTF-8");
         } catch (TemplateException e) {
             sendResponse(exchange, 500, "Template error: " + e.getMessage());

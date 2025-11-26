@@ -26,7 +26,7 @@ public class Server {
 
         server.createContext("/books", new BookListHandler(libraryData, renderer));
         server.createContext("/book-info", new BookInfoHandler(libraryData, renderer));
-        server.createContext("/employee-info", new EmployeeInfoHandler(libraryData, renderer));
+        server.createContext("/employee-info", new EmployeeInfoHandler(libraryData, renderer));  // http://localhost:9889/employee-info?email=petr.petrov@mail.com для проверки
 
         server.setExecutor(null);
         server.start();

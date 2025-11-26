@@ -4,7 +4,7 @@
       "isbn": "978-5-94962-026-3",
       "title": "Effective Java",
       "issued": true,
-      "issuedToEmployeeId": "emp101"
+      "issuedToEmployeeId": "ivan.ivanov@mail.com"
     },
     {
       "isbn": "978-1449365775",
@@ -15,12 +15,14 @@
   ],
   "employees": [
     {
-      "id": "1",
-      "name": "Иван Иванов"
+      "email": "ivan.ivanov@mail.com",
+      "name": "Иван Иванов",
+      "passwordHash": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3"
     },
     {
-      "id": "2",
-      "name": "Петр Петров"
+      "email": "petr.petrov@mail.com",
+      "name": "Петр Петров",
+      "passwordHash": "987654321fedcbaabcdef1234567890abcdef1234567890abcdef1234567890"
     }
   ]
 }

@@ -50,15 +50,16 @@ public class BookInfoHandler implements HttpHandler {
             dataModel.put("book", book);
             if (book.isIssued() && book.getIssuedToEmployeeId() != null) {
                 Employee employee = libraryData.getEmployees().stream()
-                        .filter(e -> e.getId().equals(book.getIssuedToEmployeeId()))
+                        .filter(e -> e.getEmail().equals(book.getIssuedToEmployeeId()))
                         .findFirst()
                         .orElse(null);
+
                 dataModel.put("issuedTo", employee);
             }
 
             String response = "";
             try {
-                response = renderer.render("book-info.ftl", dataModel);
+                response = renderer.render("book-info.ftlh", dataModel);
                 sendResponse(exchange, 200, response, "text/html; charset=UTF-8");
             } catch (TemplateException e) {
                 sendResponse(exchange, 500, "Template error: " + e.getMessage());

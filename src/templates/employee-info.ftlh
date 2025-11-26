@@ -11,7 +11,8 @@
         <p><a href="/books">&lt; Назад к списку книг</a></p>
     </#if>
 
-    <h1>${employee.name} (ID: ${employee.id})</h1>
+    <!-- ИСПРАВЛЕНО: используем employee.email вместо employee.id -->
+    <h1>${employee.name} (Email: ${employee.email})</h1>
 
     <h2>Текущие выданные книги</h2>
 
