@@ -12,7 +12,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class ProfileHandler implements HttpHandler {
     private final TemplateRenderer renderer;
     private final Map<String, Employee> users;
@@ -35,7 +34,6 @@ public class ProfileHandler implements HttpHandler {
         Map<String, Object> dataModel = new HashMap<>();
         String query = exchange.getRequestURI().getQuery();
         String email = null;
-
         if (query != null) {
             String[] pairs = query.split("&");
             for (String pair : pairs) {
@@ -46,7 +44,6 @@ public class ProfileHandler implements HttpHandler {
                 }
             }
         }
-
         Employee user = users.get(email);
 
         if (user == null) {

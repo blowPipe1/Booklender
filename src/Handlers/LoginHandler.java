@@ -69,7 +69,6 @@ public class LoginHandler implements HttpHandler {
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_SEE_OTHER, -1);
             return;
         }
-
         exchange.getResponseHeaders().set("Location", "/profile?email=" + email);
         exchange.sendResponseHeaders(HttpURLConnection.HTTP_SEE_OTHER, -1);
     }

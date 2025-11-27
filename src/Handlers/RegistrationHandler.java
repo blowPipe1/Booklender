@@ -72,7 +72,6 @@ public class RegistrationHandler implements HttpHandler {
         handleGet(exchange, "удачная регистрация! теперь вы можете войти");
     }
 
-
     private Map<String, String> parseFormData(String formData) {
         Map<String, String> map = new HashMap<>();
         for (String pair : formData.split("&")) {
