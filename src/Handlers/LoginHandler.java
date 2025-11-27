@@ -70,8 +70,7 @@ public class LoginHandler implements HttpHandler {
             return;
         }
 
-        //TODO дописать profile
-        exchange.getResponseHeaders().set("Location", "profile" + email);
+        exchange.getResponseHeaders().set("Location", "/profile?email=" + email);
         exchange.sendResponseHeaders(HttpURLConnection.HTTP_SEE_OTHER, -1);
     }
 
