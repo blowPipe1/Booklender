@@ -41,6 +41,7 @@ public class Server {
 
         server.createContext("/issue-book", new IssueBookHandler(renderer, libraryData, activeSessions));
         server.createContext("/return-book", new ReturnBookHandler(renderer, libraryData, activeSessions));
+        server.createContext("/logout", new LogoutHandler(activeSessions));
 
         server.setExecutor(null);
         server.start();
