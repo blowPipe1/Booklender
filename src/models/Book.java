@@ -20,4 +20,12 @@ public class Book {
     public boolean isIssued() { return issued; }
 
     public String getIssuedToEmployeeId() { return issuedToEmployeeId; }
+
+    public void setIssued(boolean issued) {
+        this.issued = issued;
+    }
+
+    public void setIssuedToEmployeeId(String issuedToEmployeeId) {
+        this.issuedToEmployeeId = issuedToEmployeeId;
+    }
 }

@@ -3,6 +3,7 @@ package Handlers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import models.Employee;
+import utils.CookieManager;
 import utils.TemplateRenderer;
 
 import java.io.IOException;
@@ -36,7 +37,7 @@ public class ProfileHandler implements HttpHandler {
 
     private void handleGet(HttpExchange exchange) throws IOException {
         Map<String, Object> dataModel = new HashMap<>();
-        String email = null;
+        String email = CookieManager.authenticate(exchange, activeSessions);
 
         List<String> cookies = exchange.getRequestHeaders().get("Cookie");
         if (cookies != null) {

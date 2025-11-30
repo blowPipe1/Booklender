@@ -3,6 +3,7 @@ package Handlers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import models.Employee;
+import utils.CookieManager;
 import utils.TemplateRenderer;
 
 import java.io.BufferedReader;
@@ -75,8 +76,7 @@ public class LoginHandler implements HttpHandler {
 
         UUID sessionId = UUID.randomUUID();
         activeSessions.put(sessionId, email);
-        String cookieValue = "sessionId=" + sessionId.toString() + "; Max-Age=600; HttpOnly; Path=/";
-        exchange.getResponseHeaders().set("Set-Cookie", cookieValue);
+        CookieManager.setSessionCookie(exchange, sessionId.toString(), 600);
 
         exchange.getResponseHeaders().set("Location", "/profile?email=" + email);
         exchange.sendResponseHeaders(HttpURLConnection.HTTP_SEE_OTHER, -1);
