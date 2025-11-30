@@ -10,15 +10,19 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class ProfileHandler implements HttpHandler {
     private final TemplateRenderer renderer;
     private final Map<String, Employee> users;
+    private final Map<UUID, String> activeSessions;
 
-    public ProfileHandler(TemplateRenderer renderer, Map<String, Employee> users) {
+    public ProfileHandler(TemplateRenderer renderer, Map<String, Employee> users, Map<UUID, String> activeSessions) {
         this.renderer = renderer;
         this.users = users;
+        this.activeSessions = activeSessions;
     }
 
     @Override
@@ -32,18 +36,23 @@ public class ProfileHandler implements HttpHandler {
 
     private void handleGet(HttpExchange exchange) throws IOException {
         Map<String, Object> dataModel = new HashMap<>();
-        String query = exchange.getRequestURI().getQuery();
         String email = null;
-        if (query != null) {
-            String[] pairs = query.split("&");
-            for (String pair : pairs) {
-                String[] entry = pair.split("=");
-                if (entry.length == 2 && "email".equals(entry[0])) {
-                    email = java.net.URLDecoder.decode(entry[1], StandardCharsets.UTF_8);
-                    break;
+
+        List<String> cookies = exchange.getRequestHeaders().get("Cookie");
+        if (cookies != null) {
+            for (String cookie : cookies) {
+                if (cookie.startsWith("sessionId=")) {
+                    String sessionIdStr = cookie.substring("sessionId=".length());
+                    try {
+                        UUID sessionId = UUID.fromString(sessionIdStr);
+                        email = activeSessions.get(sessionId);
+                        break;
+                    } catch (IllegalArgumentException e) {
+                    }
                 }
             }
         }
+
         Employee user = users.get(email);
 
         if (user == null) {

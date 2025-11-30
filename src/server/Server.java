@@ -37,7 +37,7 @@ public class Server {
 
         server.createContext("/register", new RegistrationHandler(renderer, users));
         server.createContext("/login", new LoginHandler(renderer, users, activeSessions));
-        server.createContext("/profile", new ProfileHandler(renderer, users));
+        server.createContext("/profile", new ProfileHandler(renderer, users, activeSessions));
 
         server.setExecutor(null);
         server.start();
