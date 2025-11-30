@@ -17,6 +17,7 @@
         <strong>Email (Идентификатор):</strong>
         <span>${userEmail!""}</span>
     </p>
+    <p><a href="/issue-book">Взять книженцу</a></p>
 </div>
 </body>
 </html>

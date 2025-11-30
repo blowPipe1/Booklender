@@ -11,6 +11,18 @@
       "title": "Head First Design Patterns",
       "issued": false,
       "issuedToEmployeeId": null
+    },
+    {
+      "isbn": "978-6578324325",
+      "title": "Code Testing For Dummies",
+      "issued": false,
+      "issuedToEmployeeId": null
+    },
+    {
+      "isbn": "978-1345456567",
+      "title": "How to Ruin someones Day",
+      "issued": false,
+      "issuedToEmployeeId": null
     }
   ],
   "employees": [

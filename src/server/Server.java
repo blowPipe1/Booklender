@@ -39,6 +39,8 @@ public class Server {
         server.createContext("/login", new LoginHandler(renderer, users, activeSessions));
         server.createContext("/profile", new ProfileHandler(renderer, users, activeSessions));
 
+        server.createContext("/issue-book", new IssueBookHandler(renderer, libraryData, activeSessions));
+
         server.setExecutor(null);
         server.start();
         System.out.printf("Server started on port %s%n", port);

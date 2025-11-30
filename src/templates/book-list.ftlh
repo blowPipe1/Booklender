@@ -26,5 +26,6 @@
         </tr>
     </#list>
 </table>
+<p><a href="/issue-book">Взять книженцу</a></p>
 </body>
 </html>
