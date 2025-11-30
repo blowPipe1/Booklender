@@ -17,7 +17,13 @@
         <strong>Email (Идентификатор):</strong>
         <span>${userEmail!""}</span>
     </p>
-    <p><a href="/issue-book">Взять книженцу</a></p>
+
+    <p><a href="/issue-book">Взять книжечку</a></p>
+    <#if userBooks?size == 0>
+        <p>У вас нет выданных книг.</p>
+    <#else>
+        <p><a href="/return-book">Вернуть книжечку</a></p>
+    </#if>
 </div>
 </body>
 </html>

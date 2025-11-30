@@ -37,9 +37,10 @@ public class Server {
 
         server.createContext("/register", new RegistrationHandler(renderer, users));
         server.createContext("/login", new LoginHandler(renderer, users, activeSessions));
-        server.createContext("/profile", new ProfileHandler(renderer, users, activeSessions));
+        server.createContext("/profile", new ProfileHandler(renderer, users, activeSessions, libraryData));
 
         server.createContext("/issue-book", new IssueBookHandler(renderer, libraryData, activeSessions));
+        server.createContext("/return-book", new ReturnBookHandler(renderer, libraryData, activeSessions));
 
         server.setExecutor(null);
         server.start();
