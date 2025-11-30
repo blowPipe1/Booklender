@@ -13,15 +13,18 @@ import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class LoginHandler implements HttpHandler {
     private final TemplateRenderer renderer;
     private final Map<String, Employee> users;
+    private final Map<UUID, String> activeSessions;
 
-    public LoginHandler(TemplateRenderer renderer, Map<String, Employee> users) {
+    public LoginHandler(TemplateRenderer renderer, Map<String, Employee> users, Map<UUID, String> activeSessions) {
         this.renderer = renderer;
         this.users = users;
+        this.activeSessions = activeSessions;
     }
 
     @Override
@@ -69,6 +72,12 @@ public class LoginHandler implements HttpHandler {
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_SEE_OTHER, -1);
             return;
         }
+
+        UUID sessionId = UUID.randomUUID();
+        activeSessions.put(sessionId, email);
+        String cookieValue = "sessionId=" + sessionId.toString() + "; Max-Age=600; HttpOnly; Path=/";
+        exchange.getResponseHeaders().set("Set-Cookie", cookieValue);
+
         exchange.getResponseHeaders().set("Location", "/profile?email=" + email);
         exchange.sendResponseHeaders(HttpURLConnection.HTTP_SEE_OTHER, -1);
     }

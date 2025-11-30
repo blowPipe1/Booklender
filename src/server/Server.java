@@ -11,9 +11,11 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class Server {
     private final Map<String, Employee> users = new HashMap<>();
+    private final Map<UUID, String> activeSessions = new HashMap<>();
 
     public Server(int port)throws IOException {
         LibraryData libraryData;
@@ -34,8 +36,8 @@ public class Server {
         server.createContext("/employee-info", new EmployeeInfoHandler(libraryData, renderer));  // http://localhost:9889/employee-info?email=petr.petrov@mail.com для проверки
 
         server.createContext("/register", new RegistrationHandler(renderer, users));
-        server.createContext("/login", new LoginHandler(renderer, users));
-        server.createContext("/profile", new handlers.ProfileHandler(renderer, users));
+        server.createContext("/login", new LoginHandler(renderer, users, activeSessions));
+        server.createContext("/profile", new ProfileHandler(renderer, users));
 
         server.setExecutor(null);
         server.start();
