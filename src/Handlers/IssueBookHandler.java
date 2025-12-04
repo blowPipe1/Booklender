@@ -5,6 +5,7 @@ import com.sun.net.httpserver.HttpHandler;
 import models.Book;
 import models.LibraryData;
 import utils.CookieManager;
+import utils.DataParser;
 import utils.ResponseSender;
 import utils.TemplateRenderer;
 import java.io.BufferedReader;
@@ -74,7 +75,7 @@ public class IssueBookHandler implements HttpHandler {
         String requestBody = new BufferedReader(new InputStreamReader(exchange.getRequestBody(), StandardCharsets.UTF_8))
                 .lines()
                 .collect(Collectors.joining("\n"));
-        Map<String, String> formData = parseFormData(requestBody);
+        Map<String, String> formData = DataParser.parseFormData(requestBody);
         String isbn = formData.get("isbn");
 
         boolean success = issueBook(isbn, userEmail);
@@ -108,19 +109,7 @@ public class IssueBookHandler implements HttpHandler {
         return false;
     }
 
-    private Map<String, String> parseFormData(String formData) {
-        Map<String, String> map = new HashMap<>();
-        for (String pair : formData.split("&")) {
-            String[] entry = pair.split("=");
-            if (entry.length == 2) {
-                map.put(
-                        URLDecoder.decode(entry[0], StandardCharsets.UTF_8),
-                        URLDecoder.decode(entry[1], StandardCharsets.UTF_8)
-                );
-            }
-        }
-        return map;
-    }
+
 }
 
 

@@ -10,7 +10,6 @@
 <#if userBooks?size == 0>
     <p>У вас нет выданных книг.</p>
 <#else>
-    <p>Выберите книгу для возврата:</p>
     <form action="/return-book" method="post">
         <label for="isbn_select">Выберите книгу:</label>
         <select name="isbn" id="isbn_select">

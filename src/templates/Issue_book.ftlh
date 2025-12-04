@@ -5,12 +5,12 @@
     <title>Выдача книги</title>
 </head>
 <body>
-<h1>Выдача книги сотруднику: ${userEmail}</h1>
+<h1>Выдача книги сотруднику: </h1>
+<h1>${userEmail}</h1>
 
 <#if availableBooks?size == 0>
     <p>На данный момент свободных книг нет.</p>
 <#else>
-    <p>Выберите книгу для выдачи:</p>
     <form action="/issue-book" method="post">
         <label for="isbn_select">Выберите книгу:</label>
         <select name="isbn" id="isbn_select">

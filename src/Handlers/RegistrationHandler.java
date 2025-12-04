@@ -3,6 +3,7 @@ package Handlers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import models.Employee;
+import utils.DataParser;
 import utils.ResponseSender;
 import utils.TemplateRenderer;
 import java.io.BufferedReader;
@@ -49,7 +50,7 @@ public class RegistrationHandler implements HttpHandler {
 
     private void handlePost(HttpExchange exchange) throws IOException {
         String requestBody = new BufferedReader(new InputStreamReader(exchange.getRequestBody(), StandardCharsets.UTF_8)).lines().collect(Collectors.joining("\n"));
-        Map<String, String> formData = parseFormData(requestBody);
+        Map<String, String> formData = DataParser.parseFormData(requestBody);
         String email = formData.get("email");
         String name = formData.get("name");
         String password = formData.get("password");
@@ -65,14 +66,5 @@ public class RegistrationHandler implements HttpHandler {
         Employee newUser = new Employee(email, name, password);
         users.put(email, newUser);
         handleGet(exchange, "удачная регистрация! теперь вы можете войти");
-    }
-
-    private Map<String, String> parseFormData(String formData) {
-        Map<String, String> map = new HashMap<>();
-        for (String pair : formData.split("&")) {
-            String[] entry = pair.split("=");
-            if (entry.length == 2) { map.put(entry[0], java.net.URLDecoder.decode(entry[1], StandardCharsets.UTF_8)); }
-        }
-        return map;
     }
 }

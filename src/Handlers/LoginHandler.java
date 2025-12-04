@@ -4,13 +4,13 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import models.Employee;
 import utils.CookieManager;
+import utils.DataParser;
 import utils.ResponseSender;
 import utils.TemplateRenderer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -58,7 +58,7 @@ public class LoginHandler implements HttpHandler {
 
     private void handlePost(HttpExchange exchange) throws IOException {
         String requestBody = new BufferedReader(new InputStreamReader(exchange.getRequestBody(), StandardCharsets.UTF_8)).lines().collect(Collectors.joining("\n"));
-        Map<String, String> formData = parseFormData(requestBody);
+        Map<String, String> formData = DataParser.parseFormData(requestBody);
         String email = formData.get("email");
         String password = formData.get("password");
 
@@ -80,14 +80,5 @@ public class LoginHandler implements HttpHandler {
 
     private boolean verifyPassword(String rawPassword, String storedHash) {
         return rawPassword != null && rawPassword.equals(storedHash);
-    }
-
-    private Map<String, String> parseFormData(String formData) {
-        Map<String, String> map = new HashMap<>();
-        for (String pair : formData.split("&")) {
-            String[] entry = pair.split("=");
-            if (entry.length == 2) { map.put(entry[0], java.net.URLDecoder.decode(entry[1], StandardCharsets.UTF_8)); }
-        }
-        return map;
     }
 }
