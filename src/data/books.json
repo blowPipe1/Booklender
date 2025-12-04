@@ -3,24 +3,40 @@
     {
       "isbn": "978-5-94962-026-3",
       "title": "Effective Java",
+      "description": "Когда волк устает бороться, он делает вид, что помудрел. Самые опасные враги те, от которых волк не думал защищаться. Так не бывает в природе: овцы целы и волки сыты. Волки – это люди, выбравшие свободу. Легко вставать, когда ты не ложился.Бегать за овцами — удел баранов. Я бегаю только за пивом.",
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTewgjymmhhLSrC2jiRhx6NmVSuHq22vzS8TA&s",
       "issued": true,
       "issuedToEmployeeId": "ivan.ivanov@mail.com"
     },
     {
       "isbn": "978-1449365775",
-      "title": "Head First Design Patterns",
+      "title": "The only Book you ll need",
+      "description": "no jokes, that book might be one of the greatest creations ancient Rome/Greek philosophy could provide. Even today remaining relevant to every social, racial, ethnic financial and every other groups  Your dumbass can come up with. Typing this so you wont accuse me of generating shit and what not. Try Reading it, maybe your empty purposeless hedonistic brain will actually wise up enough so you quit your job and start living as a Human",
+      "imageUrl": "https://m.media-amazon.com/images/I/61Sxnmx3XzL._AC_UF1000,1000_QL80_.jpg",
       "issued": false,
       "issuedToEmployeeId": null
     },
     {
       "isbn": "978-6578324325",
       "title": "Code Testing For Dummies",
+      "description": "Hey, whoever is reading this, i think YOU should read that one, who knows, maybe than you will stop making up baseless bullshit like \"Oh ur usin ai to generate code\", maybe they already saw it in YOUR OWN program plan that YOU willingly hand over to them",
+      "imageUrl": "https://i1.sndcdn.com/artworks-IvGy0KWKvJ35qRzD-ron8Tg-t500x500.jpg",
       "issued": false,
       "issuedToEmployeeId": null
     },
     {
       "isbn": "978-1345456567",
       "title": "How to Ruin someones Day",
+      "description": "If you only had enough primos and fates saved to reach pity once, and lost the 50/50, leaving you completely broke, what would you do? u should prolly stop playing chinese gambling simulator",
+      "imageUrl": "https://esports.gg/_next/image/?url=https%3A%2F%2Fadmin.esports.gg%2Fwp-content%2Fuploads%2F2024%2F08%2Fgacha-0-1024x576.jpeg&w=3840&q=75",
+      "issued": false,
+      "issuedToEmployeeId": null
+    },
+    {
+      "isbn": "978-9089789845",
+      "title": "The Greatest Mind of Modern World",
+      "description": "Turn yourself into convertibles by the end of the book or become a single digit IQ person either way its a win win situation for someone like you",
+      "imageUrl": "https://i1.sndcdn.com/artworks-77g5XogKkHbodvKb-RvkMyA-t500x500.jpg",
       "issued": false,
       "issuedToEmployeeId": null
     }
