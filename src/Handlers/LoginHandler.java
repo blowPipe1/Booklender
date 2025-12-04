@@ -4,6 +4,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import models.Employee;
 import utils.CookieManager;
+import utils.ResponseSender;
 import utils.TemplateRenderer;
 
 import java.io.BufferedReader;
@@ -48,12 +49,7 @@ public class LoginHandler implements HttpHandler {
 
         try {
             String responseHTML = renderer.render("login.ftlh", dataModel);
-            byte[] responseBytes = responseHTML.getBytes(StandardCharsets.UTF_8);
-            exchange.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, responseBytes.length);
-            OutputStream os = exchange.getResponseBody();
-            os.write(responseBytes);
-            os.close();
+            ResponseSender.sendResponse(exchange, 200, responseHTML, "text/html; charset=UTF-8");
         } catch (Exception e) {
             e.printStackTrace();
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, -1);

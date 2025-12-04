@@ -3,11 +3,11 @@ package Handlers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import models.Employee;
+import utils.ResponseSender;
 import utils.TemplateRenderer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -41,12 +41,7 @@ public class RegistrationHandler implements HttpHandler {
         }
         try {
             String responseHTML = renderer.render("register.ftlh", dataModel);
-            byte[] responseBytes = responseHTML.getBytes(StandardCharsets.UTF_8);
-            exchange.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, responseBytes.length);
-            OutputStream os = exchange.getResponseBody();
-            os.write(responseBytes);
-            os.close();
+            ResponseSender.sendResponse(exchange, 200, responseHTML, "text/html; charset=UTF-8");
         } catch (Exception e) {
             e.printStackTrace();
         }

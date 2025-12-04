@@ -6,9 +6,9 @@ import freemarker.template.TemplateException;
 import models.Book;
 import models.Employee;
 import models.LibraryData;
+import utils.ResponseSender;
 import utils.TemplateRenderer;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,7 +24,7 @@ public class BookInfoHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         if (!"GET".equals(exchange.getRequestMethod())) {
-            sendResponse(exchange, 405, "Method Not Allowed");
+            ResponseSender.sendResponse(exchange, 405, "Method Not Allowed");
             return;
         }
 
@@ -60,25 +60,13 @@ public class BookInfoHandler implements HttpHandler {
             String response = "";
             try {
                 response = renderer.render("book-info.ftlh", dataModel);
-                sendResponse(exchange, 200, response, "text/html; charset=UTF-8");
+                ResponseSender.sendResponse(exchange, 200, response, "text/html; charset=UTF-8");
             } catch (TemplateException e) {
-                sendResponse(exchange, 500, "Template error: " + e.getMessage());
+                ResponseSender.sendResponse(exchange, 500, "Template error: " + e.getMessage());
             }
         } else {
-            sendResponse(exchange, 404, "Book not found");
+            ResponseSender.sendResponse(exchange, 404, "Book not found");
         }
     }
 
-    private void sendResponse(HttpExchange exchange, int statusCode, String response) throws IOException {
-        sendResponse(exchange, statusCode, response, "text/plain; charset=UTF-8");
-    }
-
-    private void sendResponse(HttpExchange exchange, int statusCode, String response, String contentType) throws IOException {
-        exchange.getResponseHeaders().set("Content-Type", contentType);
-        byte[] bytes = response.getBytes("UTF-8");
-        exchange.sendResponseHeaders(statusCode, bytes.length);
-        OutputStream os = exchange.getResponseBody();
-        os.write(bytes);
-        os.close();
-    }
 }

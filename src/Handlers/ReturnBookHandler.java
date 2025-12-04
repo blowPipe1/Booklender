@@ -5,12 +5,12 @@ import com.sun.net.httpserver.HttpHandler;
 import models.Book;
 import models.LibraryData;
 import utils.CookieManager;
+import utils.ResponseSender;
 import utils.TemplateRenderer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -63,12 +63,7 @@ public class ReturnBookHandler implements HttpHandler {
 
         try {
             String responseHTML = renderer.render("return_book.ftlh", dataModel);
-            byte[] responseBytes = responseHTML.getBytes(StandardCharsets.UTF_8);
-            exchange.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, responseBytes.length);
-            OutputStream os = exchange.getResponseBody();
-            os.write(responseBytes);
-            os.close();
+            ResponseSender.sendResponse(exchange, 200, responseHTML, "text/html; charset=UTF-8");
         } catch (Exception e) {
             e.printStackTrace();
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, -1);
@@ -110,12 +105,7 @@ public class ReturnBookHandler implements HttpHandler {
         Map<String, String> map = new HashMap<>();
         for (String pair : formData.split("&")) {
             String[] entry = pair.split("=");
-            if (entry.length == 2) {
-                map.put(
-                        URLDecoder.decode(entry[0], StandardCharsets.UTF_8),
-                        URLDecoder.decode(entry[1], StandardCharsets.UTF_8)
-                );
-            }
+            if (entry.length == 2) { map.put(entry[0], java.net.URLDecoder.decode(entry[1], StandardCharsets.UTF_8)); }
         }
         return map;
     }

@@ -17,14 +17,9 @@ public class LogoutHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        // Получаем текущий ID сессии из куки
         UUID sessionId = CookieManager.getSessionIdFromCookie(exchange);
-
         if (sessionId != null) {
-            // Уничтожаем идентификатор в серверном хранилище
             activeSessions.remove(sessionId);
-
-            // Уничтожаем cookie в браузере клиента, устанавливая Max-Age=0
             String expiredCookie = "sessionId=; Max-Age=0; HttpOnly; Path=/";
             exchange.getResponseHeaders().set("Set-Cookie", expiredCookie);
         }
