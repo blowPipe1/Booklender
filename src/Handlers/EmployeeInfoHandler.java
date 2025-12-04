@@ -5,21 +5,26 @@ import freemarker.template.TemplateException;
 import models.Book;
 import models.Employee;
 import models.LibraryData;
+import utils.CookieManager;
 import utils.ResponseSender;
 import utils.TemplateRenderer;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class EmployeeInfoHandler implements HttpHandler {
     private final LibraryData libraryData;
     private final TemplateRenderer renderer;
+    private final Map<UUID, String> activeSessions;
 
-    public EmployeeInfoHandler(LibraryData libraryData, TemplateRenderer renderer) {
+    public EmployeeInfoHandler(LibraryData libraryData, TemplateRenderer renderer, Map<UUID, String> activeSessions) {
         this.libraryData = libraryData;
         this.renderer = renderer;
+        this.activeSessions = activeSessions;
     }
 
     @Override
@@ -29,22 +34,20 @@ public class EmployeeInfoHandler implements HttpHandler {
             return;
         }
 
-        String query = exchange.getRequestURI().getQuery();
-        String email = null;
+        UUID sessionId = CookieManager.getSessionIdFromCookie(exchange);
+        String sessionEmail = (sessionId != null) ? activeSessions.get(sessionId) : null;
 
-        if (query != null) {
-            for (String param : query.split("&")) {
-                if (param.startsWith("email=")) {
-                    email = param.substring(6);
-                    break;
-                }
-            }
+        if (sessionEmail == null) {
+            exchange.getResponseHeaders().set("Location", "/login");
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_SEE_OTHER, -1);
+            exchange.close();
+            return;
         }
 
+        String employeeEmail = sessionEmail;
 
-        String finalEmail = email;
         Employee employee = libraryData.getEmployees().stream()
-                .filter(e -> e.getEmail().equals(finalEmail))
+                .filter(e -> e.getEmail().equals(employeeEmail))
                 .findFirst()
                 .orElse(null);
 
@@ -52,9 +55,8 @@ public class EmployeeInfoHandler implements HttpHandler {
             Map<String, Object> dataModel = new HashMap<>();
             dataModel.put("employee", employee);
 
-            String finalEmail1 = email;
             List<Book> issuedBooks = libraryData.getBooks().stream()
-                    .filter(b -> b.getIssuedToEmployeeId() != null && b.getIssuedToEmployeeId().equals(finalEmail1))
+                    .filter(b -> b.getIssuedToEmployeeId() != null && b.getIssuedToEmployeeId().equals(employeeEmail))
                     .collect(Collectors.toList());
 
             dataModel.put("issuedBooks", issuedBooks);
@@ -67,8 +69,7 @@ public class EmployeeInfoHandler implements HttpHandler {
                 ResponseSender.sendResponse(exchange, 500, "Template error: " + e.getMessage());
             }
         } else {
-            ResponseSender.sendResponse(exchange, 404, "Employee not found");
+            ResponseSender.sendResponse(exchange, 404, "Employee data not found for authenticated user.");
         }
     }
-
 }

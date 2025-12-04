@@ -74,7 +74,7 @@ public class LoginHandler implements HttpHandler {
         activeSessions.put(sessionId, email);
         CookieManager.setSessionCookie(exchange, sessionId.toString(), 600);
 
-        exchange.getResponseHeaders().set("Location", "/profile?email=" + email);
+        exchange.getResponseHeaders().set("Location", "/profile");
         exchange.sendResponseHeaders(HttpURLConnection.HTTP_SEE_OTHER, -1);
     }
 

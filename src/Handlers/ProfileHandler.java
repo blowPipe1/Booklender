@@ -53,20 +53,9 @@ public class ProfileHandler implements HttpHandler {
 
         dataModel.put("userBooks", userBooks);
 
-        List<String> cookies = exchange.getRequestHeaders().get("Cookie");
-        if (cookies != null) {
-            for (String cookie : cookies) {
-                if (cookie.startsWith("sessionId=")) {
-                    String sessionIdStr = cookie.substring("sessionId=".length());
-                    try {
-                        UUID sessionId = UUID.fromString(sessionIdStr);
-                        email = activeSessions.get(sessionId);
-                        break;
-                    } catch (IllegalArgumentException e) {
-                    }
-                }
-            }
-        }
+
+        UUID sessionId = CookieManager.getSessionIdFromCookie(exchange);
+        email = activeSessions.get(sessionId);
 
         Employee user = users.get(email);
 

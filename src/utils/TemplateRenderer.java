@@ -7,7 +7,6 @@ import freemarker.template.TemplateException;
 
 import java.io.IOException;
 import java.io.StringWriter;
-import java.io.Writer;
 import java.util.Map;
 
 public class TemplateRenderer {
@@ -27,10 +26,5 @@ public class TemplateRenderer {
         StringWriter writer = new StringWriter();
         template.process(dataModel, writer);
         return writer.toString();
-    }
-
-    public void renderToWriter(String templateName, Map<String, Object> dataModel, Writer out) throws IOException, TemplateException {
-        Template template = configuration.getTemplate(templateName);
-        template.process(dataModel, out);
     }
 }
