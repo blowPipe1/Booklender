@@ -30,8 +30,4 @@ public class Book {
     public void setIssuedToEmployeeId(String issuedToEmployeeId) {
         this.issuedToEmployeeId = issuedToEmployeeId;
     }
-
-    public String getDescription() {return description;}
-
-    public String getImageUrl() {return imageUrl;}
 }
